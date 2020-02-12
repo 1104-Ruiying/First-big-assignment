@@ -18,7 +18,7 @@ public class App {
    * @param selectedItems 选择的菜品信息
    */
   public static String bestCharge(String selectedItems) {
-    String selectedItemsNew = selectedItems.replace(" ", "");
+    String selectedItemsNew =selectedItems.replace(" ", "") ;
     String [] splitItems = selectedItemsNew.split("x|,");
     String [] names = new String[splitItems.length];
     double [] price = new double[splitItems.length];
@@ -40,19 +40,19 @@ public class App {
 
     String detail = "============= 订餐明细 ============="+ "\n";
     for (int i = 0; i < splitItems.length; i+=2) {
-      detail+= names[i] + " x " + splitItems[i+1] + "=" + price[i] * Double.parseDouble(splitItems[i+1]) + "元" +"\n";
+      detail+= names[i] + " x " + splitItems[i+1] + " = " + (int)(price[i] * Double.parseDouble(splitItems[i+1])) + "元" +"\n";
     }
-    double totalPrice1=0;
-    double totalPrice2=0;
-    double totalPrice3=0;
+    int totalPrice1=0;
+    int totalPrice2=0;
+    int totalPrice3=0;
 
     //原价
     for (int i = 0; i < splitItems.length; i+=2) {
-      totalPrice1 += price[i] * Double.parseDouble(splitItems[i+1]);
+      totalPrice1 += (int)(price[i] * (Double.parseDouble(splitItems[i+1])));
     }
     String result1 =detail +
             "-----------------------------------\n" +
-            "总计："+totalPrice1+"元"+"\n" +
+            "总计："+totalPrice1+ "元" +"\n" +
             "===================================";
 
     //满30-6
@@ -65,20 +65,19 @@ public class App {
             "使用优惠:\n" +
             "满30减6元，省6元\n" +
             "-----------------------------------\n" +
-            "总计："+ totalPrice2 + "元"+"\n" +
+            "总计："+ totalPrice2 + "元" +"\n" +
             "===================================";
     //半价
-    double halfPrice=0 ;
+    int halfPrice=0 ;
     for (int i = 0; i < splitItems.length; i+=2) {
       if(splitItems[i].equals(getHalfPriceIds()[0])){
         price[i] = getItemPrices()[0] / 2;
-        halfPrice= price[i]*Double.parseDouble(splitItems[i+1]);
+        halfPrice= (int) price[i]* (int) (Double.parseDouble(splitItems[i+1]));
       }
       if (splitItems[i].equals(getHalfPriceIds()[1])){
         price[i] = getItemPrices()[2] /2;
-        halfPrice+=price[i]*Double.parseDouble(splitItems[i+1]);
+        halfPrice+=(int)price[i]*(int)Double.parseDouble(splitItems[i+1]);
       }
-
     }
     for (int i = 0; i < splitItems.length; i+=2) {
       totalPrice3 += price[i] * Double.parseDouble(splitItems[i+1]);
@@ -88,7 +87,7 @@ public class App {
             "使用优惠:\n" +
             "指定菜品半价(黄焖鸡，凉皮)，省"+halfPrice+"元"+"\n" +
             "-----------------------------------\n" +
-            "总计："+totalPrice3+ "元"+"\n" +
+            "总计："+totalPrice3+ "元" +"\n" +
             "===================================";
 
     String result;
